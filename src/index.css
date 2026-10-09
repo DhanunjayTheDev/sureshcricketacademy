@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /*
+   * Token names kept stable across the codebase (pitch / gold / cream / ink)
+   * even though the palette itself is navy + crimson, so component classes
+   * (bg-pitch-900, text-gold-500, etc.) didn't need to change, only these values.
+   */
+
+  /* Pitch = navy - primary brand color */
+  --color-pitch-50: #f2f5f9;
+  --color-pitch-100: #e4e9f0;
+  --color-pitch-200: #c7d0de;
+  --color-pitch-300: #9fadc2;
+  --color-pitch-400: #6b7c99;
+  --color-pitch-500: #3e5276;
+  --color-pitch-600: #2a3b5c;
+  --color-pitch-700: #1e2c47;
+  --color-pitch-800: #16213a;
+  --color-pitch-900: #0f172a;
+  --color-pitch-950: #0a101f;
+
+  /* Gold = crimson - accent / CTA color */
+  --color-gold-50: #fdf1f3;
+  --color-gold-100: #fbdee3;
+  --color-gold-200: #f8c3cd;
+  --color-gold-300: #f16b82;
+  --color-gold-400: #ec3a54;
+  --color-gold-500: #e31937;
+  --color-gold-600: #c4152f;
+  --color-gold-700: #9e1029;
+
+  /* Ink / neutrals - navy-tinted grays for text */
+  --color-ink-950: #0f172a;
+  --color-ink-900: #16213a;
+  --color-ink-700: #48566b;
+  --color-ink-500: #6b7a8f;
+  --color-ink-300: #a8b3c2;
+
+  /* Cream = cool light neutral base */
+  --color-cream-50: #ffffff;
+  --color-cream-100: #f4f6f9;
+  --color-cream-200: #e7ebf1;
+
+  /* WhatsApp brand green - reserved for WhatsApp-specific icon accents only */
+  --color-whatsapp: #25d366;
+
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 14px -4px rgba(15, 23, 42, 0.10);
+  --shadow-lift: 0 4px 10px rgba(15, 23, 42, 0.06), 0 16px 32px -12px rgba(15, 23, 42, 0.18);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-marquee: marquee 26s linear infinite;
+  --animate-ripple: ripple 0.65s ease-out forwards;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes ripple {
+    from {
+      transform: scale(0);
+      opacity: 0.45;
+    }
+    to {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-100 text-ink-950 font-sans antialiased m-0;
+  }
+  ::selection {
+    @apply bg-gold-200 text-ink-950;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle dot texture used behind navy sections - SVG pattern, no color gradients */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='1.5' cy='1.5' r='1.5' fill='%23E7EBF1'/%3E%3C/svg%3E");
+  background-size: 22px 22px;
+}
+
+.bg-grain-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='1.5' cy='1.5' r='1.5' fill='%23FFFFFF' fill-opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 22px 22px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Edge fade for full-bleed scrolling rows (testimonials ticker) - a
+   transparency mask, not a visible color gradient background. */
+.scroll-fade-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+/* Swiper pagination recolored to match the brand palette */
+.swiper-pagination-bullet {
+  background: var(--color-ink-300);
+  opacity: 0.6;
+}
+.swiper-pagination-bullet-active {
+  background: var(--color-gold-500);
+  opacity: 1;
+}
